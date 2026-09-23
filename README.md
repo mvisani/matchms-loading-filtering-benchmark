@@ -1,8 +1,11 @@
 # matchms Loading & Filtering Benchmark: 0.33.1 vs. development
 
 Benchmarks spectra **loading** and **filtering** speed of [matchms](https://github.com/matchms/matchms)
-0.33.1 (the current PyPI release) against the `development` branch, using a real ~16k-spectrum
-GNPS reference library. Produces a plot comparing the two versions.
+0.33.1 (the current PyPI release) against a pinned commit of the `development` branch
+([`591b148`](https://github.com/matchms/matchms/commit/591b1486e6d0fc021348d7535df74ad87449c6d5),
+the branch tip at pin time — see `DEV_MATCHMS_COMMIT` in `src/matchms_version_comparison/__init__.py`
+to update it), using a real ~16k-spectrum GNPS reference library. Produces a plot comparing the two
+versions.
 
 ## Dataset
 
@@ -47,8 +50,8 @@ uv run matchms-version-comparison [OPTIONS]
 
 |                              | matchms 0.33.1 (stable) | matchms development |
 | ---------------------------- | ----------------------- | ------------------- |
-| Load                         | 5.47s ± 0.10s           | 4.61s ± 0.08s       |
-| `default_filters` (combined) | 8.62s ± 0.02s           | 3.50s ± 0.01s       |
+| Load                         | 4.21s ± 0.04s           | 4.59s ± 0.03s       |
+| `default_filters` (combined) | 8.64s ± 0.09s           | 3.51s ± 0.03s       |
 
 The `development` branch's vectorized `SpectraCollection` filtering is roughly 2.5x faster on the
 combined `default_filters` call than 0.33.1's per-`Spectrum` Python loop. See
