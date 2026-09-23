@@ -37,7 +37,7 @@ uv run matchms-version-comparison [OPTIONS]
 | `--limit`       | none (full file)     | Cap spectra loaded, for a fast dry run      |
 | `--python`      | `3.12`               | Python version for both sub-projects        |
 
-Re-running is idempotent: the dataset download, sub-project creation, and `uv add` installs are all
+Re-running is safe: the dataset download, sub-project creation, and `uv add` installs are all
 skipped once already present/satisfied — only the two benchmarks and the plot regenerate.
 
 ## Output
