@@ -15,6 +15,10 @@ from matchms_version_comparison.plotting import plot_comparison, summarize_times
 REPO_ROOT = Path(__file__).resolve().parents[2]
 STABLE_PACKAGE_SPEC = "matchms==0.33.1"
 DEV_PACKAGE_SPEC = "matchms @ git+https://github.com/matchms/matchms.git"
+# Pinned to the `development` branch's tip commit at the time this was last updated, so the
+# benchmark is reproducible instead of silently drifting as the branch moves. Update by taking
+# the latest SHA from https://github.com/matchms/matchms/commits/development.
+DEV_MATCHMS_COMMIT = "591b1486e6d0fc021348d7535df74ad87449c6d5"
 
 
 def run_benchmark(
@@ -96,7 +100,7 @@ def main(
         "matchms-bench-dev",
         python_version,
         DEV_PACKAGE_SPEC,
-        branch="development",
+        rev=DEV_MATCHMS_COMMIT,
         extra_packages=("click",),
         override_dependencies=("scipy>=1.16,<1.17",),
     )

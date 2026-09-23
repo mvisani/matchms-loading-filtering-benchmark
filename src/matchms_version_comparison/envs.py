@@ -55,10 +55,18 @@ def ensure_env(
     python_version: str,
     package_spec: str,
     branch: str | None = None,
+    rev: str | None = None,
     extra_packages: tuple[str, ...] = (),
     override_dependencies: tuple[str, ...] = (),
 ) -> Path:
-    """Create/update the isolated sub-project at `env_dir` and return its venv python."""
+    """Create/update the isolated sub-project at `env_dir` and return its venv python.
+
+    `branch` and `rev` are mutually exclusive (`uv add` rejects both at once). Prefer `rev`
+    (an exact commit SHA) over `branch` wherever reproducibility matters: a branch pointer
+    moves, so re-running months later would silently install different code.
+    """
+    if branch is not None and rev is not None:
+        raise ValueError("branch and rev are mutually exclusive")
     if shutil.which("uv") is None:
         raise RuntimeError("uv is required but was not found on PATH")
 
@@ -69,6 +77,8 @@ def ensure_env(
     add_cmd = ["uv", "add", "--project", str(env_dir), package_spec]
     if branch is not None:
         add_cmd += ["--branch", branch]
+    elif rev is not None:
+        add_cmd += ["--rev", rev]
     subprocess.run(add_cmd, check=True)
 
     if extra_packages:
