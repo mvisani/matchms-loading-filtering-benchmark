@@ -4,20 +4,6 @@ Benchmarks spectra **loading** and **filtering** speed of [matchms](https://gith
 0.33.1 (the current PyPI release) against the `development` branch, using a real ~16k-spectrum
 GNPS reference library. Produces a plot comparing the two versions.
 
-## Why two isolated environments
-
-Both matchms versions install under the same package name (`matchms`) and can't coexist in one
-Python interpreter, and the `development` branch exposes a different loading/filtering API
-(a vectorized `SpectraCollection`) than 0.33.1 (per-`Spectrum` Python loops). So each version runs
-in its own standalone `uv` sub-project with its own `.venv`, driven as a subprocess by the main
-project's orchestrator (`matchms_version_comparison:main`). matchms itself is intentionally **not**
-a dependency of the main project — it only lives inside the two sub-projects under
-`.benchmark-envs/` (gitignored, created on first run).
-
-The `development` sub-project also pins `scipy>=1.16,<1.17` via `[tool.uv] override-dependencies`,
-overriding matchms' own `scipy<1.16` upper bound: on this host, scipy 1.15.x's `_propack` extension
-fails to `dlopen`, while 1.16.3 works.
-
 ## Dataset
 
 [`GNPS-LIBRARY.mgf`](https://external.gnps2.org/gnpslibrary/GNPS-LIBRARY.mgf) (~136 MiB, ~16,100
