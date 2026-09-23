@@ -1,4 +1,4 @@
-# matchms-version-comparison
+# matchms Loading & Filtering Benchmark: 0.33.1 vs. development
 
 Benchmarks spectra **loading** and **filtering** speed of [matchms](https://github.com/matchms/matchms)
 0.33.1 (the current PyPI release) against the `development` branch, using a real ~16k-spectrum
